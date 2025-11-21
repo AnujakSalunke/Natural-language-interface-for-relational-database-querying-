@@ -1,0 +1,86 @@
+Question,SQL Query
+"""List all staff members who joined after January 1, 2020.""",SELECT * FROM Staff WHERE Join_Date > '2020-01-01';
+"""Show me the staff names and their email addresses.""","SELECT Name, Email FROM Staff;"
+"""How many staff members have a Ph.D.?""",SELECT COUNT(*) FROM Staff WHERE Qualification = 'Ph.D.';
+"""Retrieve the details of staff members with a salary greater than 50000.""",SELECT * FROM Staff WHERE Salary > 50000;
+"""Get the name and salary of the staff member with the highest salary.""","SELECT Name, Salary FROM Staff ORDER BY Salary DESC LIMIT 1;"
+"""Which staff members have been with the organization the longest?""",SELECT * FROM Staff ORDER BY Join_Date ASC LIMIT 5;
+"""Count the number of staff members by their designation.""","SELECT Designation, COUNT(*) FROM Staff GROUP BY Designation;"
+"""List all staff members along with their respective branches.""","SELECT Name, Branch FROM Staff;"
+"""Find the average salary of all staff members.""",SELECT AVG(Salary) FROM Staff;
+"""Show staff members who have not been assigned to any branch.""",SELECT * FROM Staff WHERE Branch IS NULL;
+"""Get the total number of staff members for each branch.""","SELECT Branch, COUNT(*) FROM Staff GROUP BY Branch;"
+"""List the staff who have a Master’s degree.""",SELECT * FROM Staff WHERE Qualification = 'Master’s';
+"""Show the details of staff members whose names start with 'A'.""",SELECT * FROM Staff WHERE Name LIKE 'A%';
+"""Count how many staff members have a management position.""",SELECT COUNT(*) FROM Staff WHERE Designation LIKE '%Manager%';
+"""List the names and phone numbers of all staff.""","SELECT Name, Phone_Number FROM Staff;"
+"""Retrieve the staff members who are currently inactive.""",SELECT * FROM Staff WHERE Status = 'Inactive';
+"""Get the names of staff members along with their hire dates.""","SELECT Name, Join_Date FROM Staff;"
+"""How many staff members have joined this year?""",SELECT COUNT(*) FROM Staff WHERE YEAR(Join_Date) = YEAR(CURRENT_DATE);
+"""Find all staff members who have been promoted in the last year.""","SELECT * FROM Staff WHERE Promotion_Date > DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR);"
+"""List the staff members by their join date in descending order.""",SELECT * FROM Staff ORDER BY Join_Date DESC;
+"""List all branches with the number of faculty members who are HODs in each branch.""","SELECT Branch, COUNT(*) AS HOD_Count FROM Faculty WHERE Role = 'HOD' GROUP BY Branch;"
+"""Find the average salary of faculty members who are HODs, grouped by their respective branches.""","SELECT Branch, AVG(Salary) AS Average_Salary FROM Faculty WHERE Role = 'HOD' GROUP BY Branch;"
+"""Retrieve the names of faculty who are not HODs but work in the same branches as HODs.""",SELECT DISTINCT f.Name FROM Faculty f JOIN Faculty h ON f.Branch = h.Branch WHERE h.Role = 'HOD' AND f.Role != 'HOD';
+"""List the branches that have more than two HODs and their names.""","SELECT Branch, GROUP_CONCAT(Name) AS HOD_Names FROM Faculty WHERE Role = 'HOD' GROUP BY Branch HAVING COUNT(*) > 2;"
+"""Show the total number of faculty in each branch, along with the number of HODs in that branch.""","SELECT Branch, COUNT(*) AS Total_Faculty, SUM(CASE WHEN Role = 'HOD' THEN 1 ELSE 0 END) AS HOD_Count FROM Faculty GROUP BY Branch;"
+"""Get the list of HODs who have been with the institution for more than 5 years.""","SELECT Name, Branch FROM Faculty WHERE Role = 'HOD' AND DATEDIFF(CURDATE(), Start_Date) > 5 * 365;"
+"""Find branches that have no HODs and list the faculty members in those branches.""","SELECT f.Branch, f.Name FROM Faculty f WHERE f.Branch NOT IN (SELECT Branch FROM Faculty WHERE Role = 'HOD');"
+"""Retrieve the names of all faculty members who are HODs and have a salary higher than the average salary of all faculty.""",SELECT Name FROM Faculty WHERE Role = 'HOD' AND Salary > (SELECT AVG(Salary) FROM Faculty);
+"""List the faculty members who have served as HODs in multiple branches.""","SELECT Name, COUNT(DISTINCT Branch) AS Branch_Count FROM Faculty WHERE Role = 'HOD' GROUP BY Name HAVING COUNT(DISTINCT Branch) > 1;"
+"""Show a summary of faculty by branch, including total faculty and average experience of HODs.""","SELECT Branch, COUNT(*) AS Total_Faculty, AVG(CASE WHEN Role = 'HOD' THEN DATEDIFF(CURDATE(), Start_Date) / 365 END) AS Average_HOD_Experience FROM Faculty GROUP BY Branch;"
+"""List all staff members who joined after January 1, 2020.""",SELECT * FROM Staff WHERE Join_Date > '2020-01-01';
+"""Show me the staff names and their email addresses.""","SELECT Name, Email FROM Staff;"
+"""How many staff members have a Ph.D.?""",SELECT COUNT(*) FROM Staff WHERE Qualification = 'Ph.D.';
+"""Retrieve the details of staff members with a salary greater than 50000.""",SELECT * FROM Staff WHERE Salary > 50000;
+"""Get the name and salary of the staff member with the highest salary.""","SELECT Name, Salary FROM Staff ORDER BY Salary DESC LIMIT 1;"
+"""Which staff members have been with the organization the longest?""",SELECT * FROM Staff ORDER BY Join_Date ASC LIMIT 5;
+"""Count the number of staff members by their designation.""","SELECT Designation, COUNT(*) FROM Staff GROUP BY Designation;"
+"""List all staff members along with their respective branches.""","SELECT Name, Branch FROM Staff;"
+"""Find the average salary of all staff members.""",SELECT AVG(Salary) FROM Staff;
+"""Show staff members who have not been assigned to any branch.""",SELECT * FROM Staff WHERE Branch IS NULL;
+"""Get the total number of staff members for each branch.""","SELECT Branch, COUNT(*) FROM Staff GROUP BY Branch;"
+"""List the staff who have a Master’s degree.""",SELECT * FROM Staff WHERE Qualification = 'Master’s';
+"""Show the details of staff members whose names start with 'A'.""",SELECT * FROM Staff WHERE Name LIKE 'A%';
+"""Count how many staff members have a management position.""",SELECT COUNT(*) FROM Staff WHERE Designation LIKE '%Manager%';
+"""List the names and phone numbers of all staff.""","SELECT Name, Phone_Number FROM Staff;"
+"""Retrieve the staff members who are currently inactive.""",SELECT * FROM Staff WHERE Status = 'Inactive';
+"""Get the names of staff members along with their hire dates.""","SELECT Name, Join_Date FROM Staff;"
+"""How many staff members have joined this year?""",SELECT COUNT(*) FROM Staff WHERE YEAR(Join_Date) = YEAR(CURRENT_DATE);
+"""Find all staff members who have been promoted in the last year.""","SELECT * FROM Staff WHERE Promotion_Date > DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR);"
+"""List the staff members by their join date in descending order.""",SELECT * FROM Staff ORDER BY Join_Date DESC;
+Retrieve all details of students who scored above 90% in HSC.,SELECT * FROM students WHERE hsc_percentage > 90;
+Find the names and roll numbers of all female students.,"SELECT name, roll_no FROM students WHERE gender = 'Female';"
+Get the average score of all students in Sem1.,SELECT AVG(sem1) AS average_sem1_score FROM students;
+List names and email addresses of CSE students graduating in 2025.,"SELECT name, email FROM students WHERE branch = 'CSE' AND passing_year = 2025;"
+Count the total number of students for each gender.,"SELECT gender, COUNT(*) AS total_students FROM students GROUP BY gender;"
+Retrieve names and phone numbers of students with a phone number starting with '90'.,"SELECT name, phone_no FROM students WHERE phone_no LIKE '90%';"
+Find the maximum score achieved in Sem5.,SELECT MAX(sem5) AS max_sem5_score FROM students;
+Get the total score of each student and order them from highest to lowest.,"SELECT name, total_score FROM students ORDER BY total_score DESC;"
+Find the average HSC percentage for students graduating in 2025.,SELECT AVG(hsc_percentage) AS average_hsc_percentage FROM students WHERE passing_year = 2025;
+List all students who have not yet completed Sem7.,SELECT name FROM students WHERE sem7 IS NULL;
+Find students with the highest total score.,"SELECT name, total_score FROM students ORDER BY total_score DESC LIMIT 1;"
+Retrieve students' details with phone numbers containing '76'.,SELECT * FROM students WHERE phone_no LIKE '%76%';
+Get the count of students with an HSC percentage above 85.,SELECT COUNT(*) AS count_above_85 FROM students WHERE hsc_percentage > 85;
+Find the details of the youngest student.,SELECT * FROM students ORDER BY birth_date DESC LIMIT 1;
+Retrieve students with an HSC percentage below 80 and their details.,SELECT * FROM students WHERE hsc_percentage < 80;
+Retrieve all female students.,SELECT * FROM students WHERE Gender = 'Female';
+"Find students who graduated in a specific year (e.g., 2023).",SELECT * FROM students WHERE Graduation_Year = 2023;
+Get the average HSC percentage of all students.,SELECT AVG(hsc_percentage) AS avg_hsc_percentage FROM students;
+List students who scored more than 90% in their tenth standard.,SELECT * FROM students WHERE Tenth_Percentage > 90;
+Count the number of students in each branch.,"SELECT Branch, COUNT(*) AS count FROM students GROUP BY Branch;"
+Retrieve students with a mobile number starting with '98'.,SELECT * FROM students WHERE Mobile_Number LIKE '98%';
+Find the student(s) with the highest CGPA.,SELECT * FROM students WHERE Aggregate_CGPA = (SELECT MAX(Aggregate_CGPA) FROM students);
+List all students who are older than 20 years.,"SELECT * FROM students WHERE Date_of_Birth < DATE_SUB(CURDATE(), INTERVAL 20 YEAR);"
+Count the total number of students.,SELECT COUNT(*) AS total_students FROM students;
+Retrieve students who have not provided an email.,SELECT * FROM students WHERE Personal_Email IS NULL;
+Find students with a CGPA below 6.0.,SELECT * FROM students WHERE Aggregate_CGPA < 6.0;
+"Get the details of students who completed their HSC in a specific year (e.g., 2021).",SELECT * FROM students WHERE HSC_Diploma_Year = 2021;
+List students sorted by their birth date (youngest first).,SELECT * FROM students ORDER BY Date_of_Birth DESC;
+Retrieve students with a mobile number length less than 10 characters.,SELECT * FROM students WHERE LENGTH(Mobile_Number) < 10;
+Find the average CGPA across all semesters for each student.,"SELECT PRN, (Graduation_CGPA_Sem_1 + Graduation_CGPA_Sem_2 + Graduation_CGPA_Sem_3 + Graduation_CGPA_Sem_4 + Graduation_CGPA_Sem_5 + Graduation_CGPA_Sem_6) / 6 AS avg_cgpa FROM students;"
+Count students by gender.,"SELECT Gender, COUNT(*) AS count FROM students GROUP BY Gender;"
+Retrieve students who completed their tenth standard before 2015.,SELECT * FROM students WHERE Tenth_Year < 2015;
+Find students with missing HSC diploma information.,SELECT * FROM students WHERE HSC_Diploma IS NULL;
+Get the details of the oldest student.,SELECT * FROM students ORDER BY Date_of_Birth ASC LIMIT 1;
+List students whose names start with 'A'.,SELECT * FROM students WHERE Full_Name LIKE 'A%';
